@@ -1,0 +1,729 @@
+% Reference Card for GNU Emacs
+
+% Copyright (C) 1987, 1993, 1996--1997, 2001--2020 Free Software
+% Foundation, Inc.
+% Copyright (C) 2020 Masahiro Nakamura
+
+% Author: Stephen Gildea <stepheng+emacs@gildea.com>
+% Japanese translation: Masahiro Nakamura <tsuucat@icloud.com>
+
+% This document is free software: you can redistribute it and/or modify
+% it under the terms of the GNU General Public License as published by
+% the Free Software Foundation, either version 3 of the License, or
+% (at your option) any later version.
+
+% As a special additional permission, you may distribute reference cards
+% printed, or formatted for printing, with the notice "Released under
+% the terms of the GNU General Public License version 3 or later"
+% instead of the usual distributed-under-the-GNU-GPL notice, and without
+% a copy of the GPL itself.
+
+% This document is distributed in the hope that it will be useful,
+% but WITHOUT ANY WARRANTY; without even the implied warranty of
+% MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+% GNU General Public License for more details.
+
+% You should have received a copy of the GNU General Public License
+% along with GNU Emacs.  If not, see <https://www.gnu.org/licenses/>.
+
+
+% This file is intended to be processed by plain TeX (LuaTeX).
+%
+% The final reference card has six columns, three on each side.
+% This file can be used to produce it in any of three ways:
+% 1 column per page
+%    produces six separate pages, each of which needs to be reduced to 80%.
+%    This gives the best resolution.
+% 2 columns per page
+%    produces three already-reduced pages.
+%    You will still need to cut and paste.
+% 3 columns per page
+%    produces two pages which must be printed sideways to make a
+%    ready-to-use 8.5 x 11 inch reference card.
+%    For this you need a dvi device driver that can print sideways.
+% Which mode to use is controlled by setting \columnsperpage.
+%
+% To compile and print this document:
+% luatex ja-refcard.tex
+%
+% Thanks to Paul Rubin, Bob Chassell, Len Tower, and Richard Mlynarik
+% for their many good ideas.
+
+%**start of header
+\newcount\columnsperpage
+\newcount\letterpaper
+
+% This file can be printed with 1, 2, or 3 columns per page.
+% Specify how many you want here.
+\columnsperpage=3
+
+% Set letterpaper to 0 for A4 paper, 1 for letter (US) paper.  Useful
+% only when columnsperpage is 2 or 3.
+\letterpaper=1
+
+% PDF output layout.  0 for A4, 1 for letter (US), a `l' is added for
+% a landscape layout.
+\input luatex85.sty
+\input pdflayout.sty
+\pdflayout=(1l)
+
+% Nothing else needs to be changed below this line.
+
+\input emacsver.tex
+
+\input luatexja.sty
+
+\def\shortcopyrightnotice{\vskip 1ex plus 2 fill
+  \centerline{\small \copyright\ \year\ Free Software Foundation, Inc.
+  Permissions on back.}}
+
+\def\copyrightnotice{
+\vskip 1ex plus 2 fill\begingroup\small
+\centerline{原著}
+\centerline{Copyright \copyright\ \year\ Free Software Foundation, Inc.}
+\centerline{For GNU Emacs version \versionemacs}
+\centerline{Designed by Stephen Gildea}
+
+Released under the terms of the GNU General Public License version 3 or later.
+
+\centerline{日本語訳}
+\centerline{Copyright \copyright\ \year\ Masahiro Nakamura}
+
+より詳細なEmacsのドキュメントについては、配布されているEmacsまたは\break
+{\tt https://www.gnu.org/software/emacs}を確認してください。
+このカードの\TeX{}ソースについては、{\tt https://github.com/tsuu32/emacs-refcard-ja}を確認してください。
+\endgroup}
+
+% make \bye not \outer so that the \def\bye in the \else clause below
+% can be scanned without complaint.
+\def\bye{\par\vfill\supereject\end}
+
+\newdimen\intercolumnskip	%horizontal space between columns
+\newbox\columna			%boxes to hold columns already built
+\newbox\columnb
+
+\def\ncolumns{\the\columnsperpage}
+
+\message{[\ncolumns\space
+  column\if 1\ncolumns\else s\fi\space per page]}
+
+\def\scaledmag#1{ scaled \magstep #1}
+
+% This multi-way format was designed by Stephen Gildea October 1986.
+% Note that the 1-column format is fontfamily-independent.
+\if 1\ncolumns			%one-column format uses normal size
+  \hsize 4in
+  \vsize 10in
+  \voffset -.7in
+  \font\titlefont=\fontname\tenbf \scaledmag3
+  \jfont\titlefontj={file:HaranoAjiGothic-Medium.otf:jfm=ujis} at 16.6271pt
+  \let\alphabetictitlefont\titlefont
+  \gdef\titlefont{\alphabetictitlefont\titlefontj}
+  \font\headingfont=\fontname\tenbf \scaledmag2
+  \jfont\headingfontj={file:HaranoAjiGothic-Medium.otf:jfm=ujis} at 13.8559pt
+  \let\alphabeticheadingfont\headingfont
+  \gdef\headingfont{\alphabeticheadingfont\headingfontj}
+  \font\smallfont=\fontname\sevenrm
+  \let\smallfontj\sevenmin
+  \let\alphabeticsmallfont\smallfont
+  \gdef\smallfont{\alphabeticsmallfont\smallfontj}
+  \font\smallsy=\fontname\sevensy
+
+  \footline{\hss\folio}
+  \def\makefootline{\baselineskip10pt\hsize6.5in\line{\the\footline}}
+\else				%2 or 3 columns uses prereduced size
+  \hsize 3.2in
+  \if 1\the\letterpaper
+     \vsize 7.95in
+  \else
+     \vsize 7.65in
+  \fi
+  \hoffset -.75in
+  \voffset -.745in
+  \font\titlefont=cmbx10 \scaledmag2
+  \jfont\titlefontj={file:HaranoAjiGothic-Medium.otf:jfm=ujis} at 13.8559pt
+  \let\alphabetictitlefont\titlefont
+  \gdef\titlefont{\alphabetictitlefont\titlefontj}
+  \font\headingfont=cmbx10 \scaledmag1
+  \jfont\headingfontj={file:HaranoAjiGothic-Medium.otf:jfm=ujis} at 11.5466pt
+  \let\alphabeticheadingfont\headingfont
+  \gdef\headingfont{\alphabeticheadingfont\headingfontj}
+  \font\smallfont=cmr6
+  \jfont\smallfontj={file:HaranoAjiMincho-Medium.otf:jfm=ujis} at 5.7733pt
+  \let\alphabeticsmallfont\smallfont
+  \gdef\smallfont{\alphabeticsmallfont\smallfontj}
+  \font\smallsy=cmsy6
+  \font\eightrm=cmr8
+  \font\eightbf=cmbx8
+  \font\eightit=cmti8
+  \font\eighttt=cmtt8
+  \font\eightmi=cmmi8
+  \font\eightsy=cmsy8
+  \jfont\eightmin={file:HaranoAjiMincho-Medium.otf:jfm=ujis} at 7.6977pt
+  \jfont\eightgt={file:HaranoAjiGothic-Medium.otf:jfm=ujis} at 7.6977pt
+  \textfont0=\eightrm
+  \textfont1=\eightmi
+  \textfont2=\eightsy
+  \def\rm{\eightrm}
+  \def\mc{\eightmin}
+  \let\alphabeticfont\rm
+  \gdef\rm{\alphabeticfont\mc}
+  \def\bf{\eightbf\eightgt}
+  \def\it{\eightit}
+  \def\tt{\eighttt}
+  \if 1\the\letterpaper
+     \normalbaselineskip=.8\normalbaselineskip
+  \else
+     \normalbaselineskip=.7\normalbaselineskip
+  \fi
+  \normallineskip=.8\normallineskip
+  \normallineskiplimit=.8\normallineskiplimit
+  \normalbaselines\rm		%make definitions take effect
+
+  \if 2\ncolumns
+    \let\maxcolumn=b
+    \footline{\hss\rm\folio\hss}
+    \def\makefootline{\vskip 2in \hsize=6.86in\line{\the\footline}}
+  \else \if 3\ncolumns
+    \let\maxcolumn=c
+    \nopagenumbers
+  \else
+    \errhelp{You must set \columnsperpage equal to 1, 2, or 3.}
+    \errmessage{Illegal number of columns per page}
+  \fi\fi
+
+  \intercolumnskip=.46in
+  \def\abc{a}
+  \output={%			%see The TeXbook page 257
+      % This next line is useful when designing the layout.
+      %\immediate\write16{Column \folio\abc\space starts with \firstmark}
+      \if \maxcolumn\abc \multicolumnformat \global\def\abc{a}
+      \else\if a\abc
+	\global\setbox\columna\columnbox \global\def\abc{b}
+        %% in case we never use \columnb (two-column mode)
+        \global\setbox\columnb\hbox to -\intercolumnskip{}
+      \else
+	\global\setbox\columnb\columnbox \global\def\abc{c}\fi\fi}
+  \def\multicolumnformat{\shipout\vbox{\makeheadline
+      \hbox{\box\columna\hskip\intercolumnskip
+        \box\columnb\hskip\intercolumnskip\columnbox}
+      \makefootline}\advancepageno}
+  \def\columnbox{\leftline{\pagebody}}
+
+  \def\bye{\par\vfill\supereject
+    \if a\abc \else\null\vfill\eject\fi
+    \if a\abc \else\null\vfill\eject\fi
+    \end}
+\fi
+
+% we won't be using math mode much, so redefine some of the characters
+% we might want to talk about
+\catcode`\^=12
+\catcode`\_=12
+
+\chardef\\=`\\
+\chardef\{=`\{
+\chardef\}=`\}
+
+\hyphenation{mini-buf-fer}
+
+\parindent 0pt
+\parskip 1ex plus .5ex minus .5ex
+
+\def\small{\smallfont\textfont2=\smallsy\baselineskip=.8\baselineskip}
+
+% newcolumn - force a new column.  Use sparingly, probably only for
+% the first column of a page, which should have a title anyway.
+\outer\def\newcolumn{\vfill\eject}
+
+% title - page title.  Argument is title text.
+\outer\def\title#1{{\titlefont\centerline{#1}}\vskip 1ex plus .5ex}
+
+% section - new major section.  Argument is section name.
+\outer\def\section#1{\par\filbreak
+  \vskip 3ex plus 2ex minus 2ex {\headingfont #1}\mark{#1}%
+  \vskip 2ex plus 1ex minus 1.5ex}
+
+\newdimen\keyindent
+
+% beginindentedkeys...endindentedkeys - key definitions will be
+% indented, but running text, typically used as headings to group
+% definitions, will not.
+\def\beginindentedkeys{\keyindent=1em}
+\def\endindentedkeys{\keyindent=0em}
+\endindentedkeys
+
+% paralign - begin paragraph containing an alignment.
+% If an \halign is entered while in vertical mode, a parskip is never
+% inserted.  Using \paralign instead of \halign solves this problem.
+\def\paralign{\vskip\parskip\halign}
+
+% \<...> - surrounds a variable name in a code example
+\def\<#1>{{\it #1\/}}
+
+% kbd - argument is characters typed literally.  Like the Texinfo command.
+\def\kbd#1{{\tt#1}\null}	%\null so not an abbrev even if period follows
+
+% beginexample...endexample - surrounds literal text, such a code example.
+% typeset in a typewriter font with line breaks preserved
+\def\beginexample{\par\leavevmode\begingroup
+  \obeylines\obeyspaces\parskip0pt\tt}
+{\obeyspaces\global\let =\ }
+\def\endexample{\endgroup}
+
+% key - definition of a key.
+% \key{description of key}{key-name}
+% prints the description left-justified, and the key-name in a \kbd
+% form near the right margin.
+\def\key#1#2{\leavevmode\hbox to \hsize{\vtop
+  {\hsize=.75\hsize\rightskip=1em
+  \hskip\keyindent\relax#1}\kbd{#2}\hfil}}
+
+\newbox\metaxbox
+\setbox\metaxbox\hbox{\kbd{M-x }}
+\newdimen\metaxwidth
+\metaxwidth=\wd\metaxbox
+
+% metax - definition of a M-x command.
+% \metax{description of command}{M-x command-name}
+% Tries to justify the beginning of the command name at the same place
+% as \key starts the key name.  (The "M-x " sticks out to the left.)
+\def\metax#1#2{\leavevmode\hbox to \hsize{\hbox to .75\hsize
+  {\hskip\keyindent\relax#1\hfil}%
+  \hskip -\metaxwidth minus 1fil
+  \kbd{#2}\hfil}}
+
+% threecol - like "key" but with two key names.
+% for example, one for doing the action backward, and one for forward.
+\def\threecol#1#2#3{\hskip\keyindent\relax#1\hfil&\kbd{#2}\hfil\quad
+  &\kbd{#3}\hfil\quad\cr}
+
+%**end of header
+
+
+\title{GNU Emacsリファレンスカード}
+
+\centerline{(for version \versionemacs)}
+
+\section{Emacsを開始する}
+
+GNU Emacs \versionemacs{}を開始するには、名前を入力する： \kbd{emacs}
+
+\section{Emacsを終了する}
+
+\key{Emacsを中断する（X環境ではアイコン化）}{C-z}
+\key{Emacsを完全に終了する}{C-x C-c}
+
+\section{ファイル}
+
+\key{ファイルを{\bf 開く}}{C-x C-f}
+\key{ディスク上にファイルを{\bf 保存する}}{C-x C-s}
+\key{{\bf 全ての}ファイルを保存する}{C-x s}
+\key{バッファに他のバッファの内容を{\bf 挿入する}}{C-x i}
+\key{バッファを閉じて別のファイルを開く}{C-x C-v}
+\key{バッファを指定したファイルに保存する}{C-x C-w}
+\key{バッファのread-onlyステータスを切り替える}{C-x C-q}
+
+\section{ヘルプを使う}
+
+ヘルプシステムは簡単です。 \kbd{C-h}（または\kbd{F1}）をタイプして、指示に
+従ってください。もし初心者なら、\kbd{C-h t}で{\bf チュートリアル}を読むこと
+を薦めます。
+
+\key{ヘルプウィンドウを閉じる}{C-x 1}
+\key{ヘルプウィンドウをスクロールする}{C-M-v}
+
+\key{apropos: 指定した文字列にマッチしたコマンドの説明を見る}{C-h a}
+\key{特定のキーで動作する関数の説明を見る}{C-h k}
+\key{関数の説明を見る}{C-h f}
+\key{モード固有の情報を見る}{C-h m}
+
+\section{問題発生からの復旧}
+
+\key{一部だけタイプした状態や実行中のコマンドを{\bf 中断する}}{C-g}
+\metax{クラッシュで失ったファイルを{\bf 復旧する}}{M-x recover-session}
+\metax{変更を{\bf 取り消す}（{\bf アンドゥ}）}{C-x u, C-_ {\rm or} C-/}
+\metax{バッファを元の内容に復元する}{M-x revert-buffer}
+\key{カーソルを中心にウィンドウをスクロールする}{C-l}
+
+\section{インクリメンタルサーチ}
+
+\key{前方を検索する}{C-s}
+\key{後方を検索する}{C-r}
+\key{正規表現で検索する}{C-M-s}
+\key{正規表現で後方を検索する}{C-M-r}
+
+\key{前回の検索文字列を選択する}{M-p}
+\key{後の検索文字列を選択する}{M-n}
+\key{インクリメンタルサーチを終了する}{RET}
+\key{直前の検索文字を取り消す}{DEL}
+\key{現在の検索を中断する}{C-g}
+
+同方向の検索を繰り返すには\kbd{C-s}または\kbd{C-r}を複数回タイプしてください。
+検索中に\kbd{C-g}をタイプすると、マッチしていない部分のみ取り消されます。
+
+\shortcopyrightnotice
+
+\newcolumn
+\section{移動}
+
+\paralign to \hsize{#\tabskip=10pt plus 1 fil&#\tabskip=0pt&#\cr
+\threecol{{\bf 移動の単位}}{{\bf 後方}}{{\bf 前方}}
+\threecol{文字}{C-b}{C-f}
+\threecol{単語}{M-b}{M-f}
+\threecol{行}{C-p}{C-n}
+\threecol{行頭または行末}{C-a}{C-e}
+\threecol{文}{M-a}{M-e}
+\threecol{段落}{M-\{}{M-\}}
+\threecol{ページ}{C-x [}{C-x ]}
+\threecol{S式}{C-M-b}{C-M-f}
+\threecol{関数}{C-M-a}{C-M-e}
+\threecol{バッファの先頭または末尾}{M-<}{M->}
+}
+
+\key{次のスクリーンへスクロールする}{C-v}
+\key{前のスクリーンへスクロールする}{M-v}
+\key{左へスクロールする}{C-x <}
+\key{右へスクロールする}{C-x >}
+\key{現在の行を中央／最上部／最下部へスクロールする}{C-l}
+
+\key{指定した行へ移動する}{M-g g}
+\key{指定したポイントへ移動する}{M-g c}
+\key{現在の行のインデントまで移動する}{M-m}
+
+\section{キル（カット）と削除}
+
+\paralign to \hsize{#\tabskip=10pt plus 1 fil&#\tabskip=0pt&#\cr
+\threecol{{\bf キルの単位}}{{\bf 後方}}{{\bf 前方}}
+\threecol{文字（キルではなく削除）}{DEL}{C-d}
+\threecol{単語}{M-DEL}{M-d}
+\threecol{行（終端まで）}{M-0 C-k}{C-k}
+\threecol{文}{C-x DEL}{M-k}
+\threecol{S式}{M-- C-M-k}{C-M-k}
+}
+
+\key{{\bf リージョン（選択範囲）}をキルする}{C-w}
+\key{リージョンをキルリングへコピーする}{M-w}
+\key{指定した{\it 文字}までキルする}{M-z {\it 文字}}
+
+\key{最後にキルしたものをヤンクする（ペースト）}{C-y}
+\key{直前のヤンクを一つ前にキルしたものに置き換える}{M-y}
+
+\section{マーク}
+
+\key{ポイント（カーソル位置）にマークをセットする}{C-@ {\rm or} C-SPC}
+\key{ポイントとマークの位置を入れ替える}{C-x C-x}
+
+\key{{\it 引数\/}個先の{\bf 単語}までマークをセットする}{M-@}
+\key{{\bf 文}をマークする}{M-h}
+\key{{\bf ページ}をマークする}{C-x C-p}
+\key{{\bf S式}をマークする}{C-M-@}
+\key{{\bf 関数}をマークする}{C-M-h}
+\key{{\bf バッファ}全体をマークする}{C-x h}
+
+\section{対話的な置換(Query Replace)}
+
+\key{テキストの文字列を対話的に置換する}{M-\%}
+% query-replace-regexp is bound to C-M-% but that can't be typed on
+% consoles.
+\metax{正規表現を使う}{M-x query-replace-regexp}
+
+対話的な置換において有効なキーは、
+
+\key{現在のものを{\bf 置き換えて}、次に行く}{SPC {\rm or} y}
+\key{現在のものを置き換えて、止まる}{,}
+\key{置き換えずに次へ{\bf スキップする}}{DEL {\rm or} n}
+\key{残りのマッチ全てを置き換える}{!}
+\key{一つ前のマッチに{\bf 移動する}}{^}
+\key{対話的な置換を{\bf 終了する}}{RET}
+\key{再帰編集を開始する（\kbd{C-M-c}で抜ける）}{C-r}
+
+\newcolumn
+\section{マルチウィンドウ}
+
+二つのコマンドが書かれているものでは、後者はウィンドウではなくフレームに対する同様の操作
+を示しています。
+
+{\setbox0=\hbox{\kbd{0}}\advance\hsize by 0\wd0
+\paralign to \hsize{#\tabskip=10pt plus 1 fil&#\tabskip=0pt&#\cr
+\threecol{全ての他のウィンドウを閉じる}{C-x 1\ \ \ \ }{C-x 5 1}
+\threecol{ウィンドウを上下に分割する}{C-x 2\ \ \ \ }{C-x 5 2}
+\threecol{現在のウィンドウを閉じる}{C-x 0\ \ \ \ }{C-x 5 0}
+}}
+\key{ウィンドウを左右に分割する}{C-x 3}
+
+\key{他のウィンドウをスクロールする}{C-M-v}
+
+{\setbox0=\hbox{\kbd{0}}\advance\hsize by 2\wd0
+\paralign to \hsize{#\tabskip=10pt plus 1 fil&#\tabskip=0pt&#\cr
+\threecol{別のウィンドウへ切り替える}{C-x o}{C-x 5 o}
+
+\threecol{他のウィンドウでバッファを開く}{C-x 4 b}{C-x 5 b}
+\threecol{他のウィンドウでバッファを表示する}{C-x 4 C-o}{C-x 5 C-o}
+\threecol{他のウィンドウでファイルを開く}{C-x 4 f}{C-x 5 f}
+\threecol{他のウィンドウでread-onlyで開く}{C-x 4 r}{C-x 5 r}
+\threecol{他のウィンドウでDiredを開く}{C-x 4 d}{C-x 5 d}
+\threecol{他のウィンドウでタグを開く}{C-x 4 .}{C-x 5 .}
+}}
+
+\key{ウィンドウを上下に高くする}{C-x ^}
+\key{ウィンドウを左右に狭める}{C-x \{}
+\key{ウィンドウの左右に広げる}{C-x \}}
+
+\section{整形}
+
+\key{現在の{\bf 行}をインデントする（モード依存）}{TAB}
+\key{{\bf リージョン}をインデントする（モード依存）}{C-M-\\}
+\key{{\bf S式}をインデントする（モード依存）}{C-M-q}
+\key{リージョンを{\it 引数\/}個の列だけインデントする}{C-x TAB}
+\key{コメントアウトしてインデントする}{M-;}
+
+\key{ポイントの直後に改行を挿入する}{C-o}
+\key{行の後ろを垂直に移動する}{C-M-o}
+\key{ポイント周りの空白行を削除する}{C-x C-o}
+\key{現在の行を前の行（引数付で次の行）に繋げる}{M-^}
+\key{ポイント周りの全ての空白文字を削除する}{M-\\}
+\key{ポイント周りに空白を一つだけ置く}{M-SPC}
+
+\key{段落をフィルする（詰め込む）}{M-q}
+\key{フィルの幅を{\it 引数}にセットする}{C-x f}
+\key{フィルの行頭プレフィックスをセットする}{C-x .}
+
+\key{フェイスをセットする}{M-o}
+
+\section{大文字小文字の変換}
+
+\key{単語を大文字にする(uppercase)}{M-u}
+\key{単語を小文字にする(lowercase)}{M-l}
+\key{単語の先頭を大文字にする(capitalize)}{M-c}
+
+\key{リージョンを大文字にする}{C-x C-u}
+\key{リージョンを小文字にする}{C-x C-l}
+
+\section{ミニバッファ}
+
+以下のキーはミニバッファ内で有効です。
+
+\key{可能な限り補完する}{TAB}
+\key{一単語まで補完する}{SPC}
+\key{補完して実行する}{RET}
+\key{補完を表示する}{?}
+\key{以前のミニバッファの入力を使う}{M-p}
+\key{以後のミニバッファの入力かデフォルトを使う}{M-n}
+\key{正規表現でヒストリを後方に検索する}{M-r}
+\key{正規行源でヒストリを前方に検索する}{M-s}
+\key{コマンドを中断する}{C-g}
+
+\kbd{C-x ESC ESC}でミニバッファで最後に使ったコマンドを編集し再実行できます。
+\kbd{F10}でテキスト端末上でメニューバーを利用できます。
+
+\newcolumn
+\title{GNU Emacsリファレンスカード}
+
+\section{バッファ}
+
+\key{他のバッファを開く}{C-x b}
+\key{バッファリストを見る}{C-x C-b}
+\key{バッファを閉じる}{C-x k}
+
+\section{入れ替え}
+
+\key{{\bf 文字}を入れ替える}{C-t}
+\key{{\bf 単語}を入れ替える}{M-t}
+\key{{\bf 行}を入れ替える}{C-x C-t}
+\key{{\bf S式}を入れ替える}{C-M-t}
+
+\section{スペルチェック}
+
+\key{現在の単語のスペルをチェックする}{M-\$}
+\metax{リージョン内の全ての単語をチェックする}{M-x ispell-region}
+\metax{バッファ全体のスペルをチェックする}{M-x ispell-buffer}
+\metax{on-the-flyスペルチェックを切り替える}{M-x flyspell-mode}
+
+\section{タグ}
+
+\key{タグ（定義）を開く}{M-.}
+\metax{新しいタグファイルを指定する}{M-x visit-tags-table}
+
+\metax{全てのファイルを正規表現で検索する}{M-x tags-search}
+\metax{全てのファイルに対話的な置換を行う}{M-x tags-query-replace}
+\key{前回のタグ検索または対話的な置換を続ける}{M-,}
+
+\section{シェル}
+
+\key{シェルコマンドを実行する}{M-!}
+\key{非同期的にシェルコマンドを実行する}{M-\&}
+\key{リージョンを入力にシェルコマンドを実行する}{M-|}
+\key{リージョンをシェルコマンド出力で置き換える}{C-u M-|}
+\key{\kbd{*shell*}ウィンドウでシェルを開始する}{M-x shell}
+
+\section{矩形領域}
+
+\key{矩形領域をレジスタに保存する}{C-x r r}
+\key{矩形領域をキルする}{C-x r k}
+\key{矩形領域をヤンクする}{C-x r y}
+\key{矩形領域を開けてテキストを右にシフトする}{C-x r o}
+\key{矩形領域を削除する}{C-x r c}
+\key{各行にプレフィックス文字列をつける}{C-x r t}
+
+\section{略称(Abbrevs)}
+
+\key{略称をグローバルに追加する}{C-x a g}
+\key{略称をモードローカルに追加する}{C-x a l}
+\key{略称に対する展開をグローバルに追加する}{C-x a i g}
+\key{略称に対する展開をモードローカルに追加する}{C-x a i l}
+\key{略称を展開する}{C-x a e}
+
+\key{一つ前の単語について動的に展開する}{M-/}
+
+\section{その他}
+
+\key{数引数}{C-u {\it 数値}}\break
+\key{負引数}{M--}
+\key{クォートして挿入する}{C-q {\it 文字}}
+
+\newcolumn
+\section{正規表現}
+
+\key{改行以外のあらゆる1文字}{. {\rm(dot)}}
+\key{0個以上の繰り返し}{*}
+\key{1個以上の繰り返し}{+}
+\key{0個か1個の繰り返し}{?}
+\key{特殊文字をクォート}{\\}
+\key{正規表現の特殊文字{\it c\/}をクォート}{\\{\it c}}
+\key{代替(``or'')}{\\|}
+\key{グループ化}{\\( {\rm$\ldots$} \\)}
+\key{shyなグループ化}{\\(?: {\rm$\ldots$} \\)}
+\key{明示的に番号付けしたグループ化}{\\(?NUM: {\rm$\ldots$} \\)}
+\key{{\it n\/}番目のグループと同じ文字列}{\\{\it n}}
+\key{単語の区切り}{\\b}
+\key{単語の区切り以外}{\\B}
+
+\paralign to \hsize{#\tabskip=10pt plus 1 fil&#\tabskip=0pt&#\cr
+\threecol{{\bf 単位}}{{\bf マッチ開始}}{{\bf マッチ終了}}
+\threecol{行}{^}{\$}
+\threecol{単語}{\\<}{\\>}
+\threecol{シンボル}{\\_<}{\\_>}
+\threecol{バッファ}{\\`}{\\'}
+%% FIXME: "`" and "'" isn't displayed correctly in the output PDF file
+
+\threecol{{\bf 文字の種類}}{{\bf これらにマッチ}}{{\bf 他にマッチ}}
+\threecol{明示した集合}{[ {\rm$\ldots$} ]}{[^ {\rm$\ldots$} ]}
+\threecol{wordシンタックス文字}{\\w}{\\W}
+\threecol{シンタックス{\it c}に属する文字}{\\s{\it c}}{\\S{\it c}}
+\threecol{カテゴリー{\it c}に属する文字}{\\c{\it c}}{\\C{\it c}}
+}
+
+\section{国際文字セット}
+
+\key{主要な言語を指定する}{C-x RET l}
+\metax{全てのインプットメソッドを見る}{M-x list-input-methods}
+\key{インプットメソッドを有効化/無効化する}{C-\\}
+\key{直後のコマンド用に符号化方式をセットする}{C-x RET c}
+\metax{全ての符号化方式を見る}{M-x list-coding-systems}
+\metax{優先する符号化方式を選択する}{M-x prefer-coding-system}
+
+\section{Info}
+
+\key{Infoドキュメントリーダーを開始する}{C-h i}
+\key{指定した関数や変数をInfoから探す}{C-h S}
+\beginindentedkeys
+
+ノード内の移動：
+
+\key{前方へスクロールする}{SPC}
+\key{後方へスクロールする}{DEL}
+\key{ノードの先頭へ移動する}{b}
+
+ノード間の移動：
+
+\key{{\bf 次の}ノード}{n}
+\key{{\bf 前の}ノード}{p}
+\key{{\bf 上へ}移動する}{u}
+\key{名前を指定してメニューアイテムを開く}{m}
+\key{数値(1--9)を指定して{\it n\/}番目のメニューアイテムを開く}{{\it n}}
+\key{相互参照をたどる（\kbd{l}で戻る）}{f}
+\key{最後に見たノードに戻る}{l}
+\key{ディレクトリノードに戻る}{d}
+\key{Infoファイルのトップノードへ移動する}{t}
+\key{名前を指定してノードを移動する}{g}
+
+その他：
+
+\key{Info{\bf チュートリアル}を開く}{h}
+\key{索引項目を指定してInfoを引く}{i}
+\key{正規表現でノードを検索する}{s}
+\key{Infoを{\bf 終了する}}{q}
+
+\endindentedkeys
+
+\newcolumn
+\section{レジスタ}
+
+\key{リージョンをレジスタに保存する}{C-x r s}
+\key{レジスタの内容をバッファに挿入する}{C-x r i}
+
+\key{ポイントの位置をレジスタに保存する}{C-x r SPC}
+\key{レジスタに保存されたポイントへジャンプする}{C-x r j}
+
+\section{キーボードマクロ}
+
+\key{キーボードマクロの定義を{\bf 開始する}}{C-x (}
+\key{キーボードマクロの定義を{\bf 終了する}}{C-x )}
+\key{最後に定義したキーボードマクロを{\bf 実行する}}{C-x e}
+\key{最後のキーボードマクロに定義を追加する}{C-u C-x (}
+\metax{キーボードマクロに名前をつける}{M-x name-last-kbd-macro}
+\metax{Lispでの定義をバッファに挿入する}{M-x insert-kbd-macro}
+
+\section{Emacs Lispを扱うコマンド}
+
+\key{ポイント直前の{\bf S式}を評価する}{C-x C-e}
+\key{現在の{\bf defun}を評価する}{C-M-x}
+\metax{{\bf リージョン}を評価する}{M-x eval-region}
+\key{ミニバッファで読み取って評価する}{M-:}
+\metax{{\bf load-path}上のライブラリをロードする}{M-x load-library}
+
+\section{簡単なカスタマイズ}
+
+\metax{変数やフェイスをカスタマイズする}{M-x customize}
+
+% The intended audience here is the person who wants to make simple
+% customizations and knows Lisp syntax.
+
+Emacs Lispでグローバルにキーバインドを設定する（例）：
+
+\beginexample%
+(global-set-key (kbd "C-c g") 'search-forward)
+(global-set-key (kbd "M-\#") 'query-replace-regexp)
+\endexample
+
+\section{コマンドを書く}
+
+\beginexample%
+(defun \<command-name> (\<args>)
+  "\<documentation>" (interactive "\<template>")
+  \<body>)
+\endexample
+
+例：
+
+\beginexample%
+(defun this-line-to-top-of-window (line)
+  "Reposition current line to top of window.
+With prefix argument LINE, put point on LINE."
+  (interactive "P")
+  (recenter (if (null line)
+                0
+              (prefix-numeric-value line))))
+\endexample
+
+\kbd{interactive}は、どのような形式で対話的に引数を読み取るかを指定しています。
+詳細は\kbd{C-h f interactive RET}で確認してください。
+
+\copyrightnotice
+
+\bye
+
+% Local variables:
+% compile-command: "pdftex refcard"
+% End:
